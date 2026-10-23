@@ -1,0 +1,13 @@
+{
+  "name": "manage-tasks",
+  "version": "1.0.0",
+  "description": "Task lifecycle over markdown task files in a docs repository: review, work, discuss, groom and setup. Per-project settings live in the project's .claude/manage-tasks/ folder.",
+  "author": {
+    "name": "Yannis Moudilos",
+    "url": "https://github.com/ymoud"
+  },
+  "homepage": "https://github.com/ymoud/skillyard",
+  "repository": "https://github.com/ymoud/skillyard",
+  "license": "MIT",
+  "keywords": ["tasks", "backlog", "code-review", "project-management"]
+}

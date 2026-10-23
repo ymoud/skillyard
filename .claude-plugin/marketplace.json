@@ -1,0 +1,15 @@
+{
+  "name": "skillyard",
+  "description": "Skills for running project work with Claude Code.",
+  "owner": {
+    "name": "Yannis Moudilos",
+    "url": "https://github.com/ymoud"
+  },
+  "plugins": [
+    {
+      "name": "manage-tasks",
+      "source": "./plugins/manage-tasks",
+      "description": "Task lifecycle over markdown task files in a docs repository: review, work, discuss, groom and setup."
+    }
+  ]
+}
