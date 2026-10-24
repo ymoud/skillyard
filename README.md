@@ -1,6 +1,8 @@
-# skillyard
+# SkillYard
 
-Skills for running project work with [Claude Code](https://code.claude.com). The repository is also a Claude Code plugin marketplace.
+[Claude Code](https://code.claude.com) skills for the work around the code. Plan a task, build it, review it, close it. Turn a client request into a priced offer, deliver it in phases, show the client what changed in a slide deck they can page through, and record the payment. SkillYard keeps all of it in plain markdown in your docs repository, where git holds the history and anyone on the project can read where things stand.
+
+The skills are generic; your project supplies the details. Folders, branches, the review cycle, the client's language and your own rules live in a few settings files that each skill's `setup` writes for you. SkillYard is also a Claude Code plugin marketplace: install a skill in two commands, or commit a pinned copy into your project.
 
 | Plugin | What it does |
 |--------|--------------|

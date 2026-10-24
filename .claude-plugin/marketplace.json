@@ -1,6 +1,6 @@
 {
   "name": "skillyard",
-  "description": "Skills for running project work with Claude Code.",
+  "description": "SkillYard: Claude Code skills for the work around the code. Tasks, reviews and client deliverables, kept in plain markdown in your docs repository.",
   "owner": {
     "name": "Yannis Moudilos",
     "url": "https://github.com/ymoud"
