@@ -1,0 +1,315 @@
+<!doctype html>
+<!--
+  Client presentation template (manage-deliverables): a slide deck.
+  Copied to {deliverables_dir}/D-<NNN>-<client>-<slug>/presentation/YYYY-MM-DD/index.html. Replace every
+  {{label:…}} with its value in the client's language (references/presentation-labels.md), and every
+  other {{…}} with the deck's content.
+  One <section class="slide"> per screen. Layouts:
+    - text + one or two screenshots side by side: <div class="inner two"> (text left, figure or .shots right)
+    - text above two or three screenshots:         <div class="inner"> with a .shots row
+    - text only (title, asks, next steps):         <div class="inner narrow">
+  A slide must fit one desktop screen: at most ~80 words of text and two or three screenshots. Split a change
+  with more material into several slides. The navigation (buttons, counter, keys, scroll/swipe snapping) needs
+  no edits: it counts the slides itself. Every <img> in the deck opens in the full-size viewer on click.
+  Everything stays inside the folder, referenced by relative path, so the folder works wherever it is copied.
+-->
+<html lang="{{label:lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>{{Client}} — {{Delivery title}}</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --card: #ffffff; --text: #1d1d1b; --muted: #5f5e5a;
+    --line: #e3e1dc; --accent: #1f5f8b; --accent-soft: #e6eff5; --warn-soft: #fbf1e3; --warn: #8a5a12;
+    --ok: #2e7d32; --ok-soft: #e7f3e8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161615; --card: #1f1f1d; --text: #ecebe7; --muted: #a8a6a0;
+      --line: #33322f; --accent: #7fb3d8; --accent-soft: #1c2a34; --warn-soft: #2e2416; --warn: #e2b46a;
+      --ok: #81c784; --ok-soft: #1b2a1c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  }
+
+  /* Slides: one per screen; scrolling or swiping snaps to the next one. */
+  .deck { height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  .slide {
+    min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+    display: flex; align-items: center; justify-content: center; padding: 48px 20px 88px;
+  }
+  .inner { width: 100%; max-width: 1100px; }
+  .two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 36px; align-items: center; }
+  .narrow { max-width: 760px; margin: 0 auto; }
+
+  .eyebrow { color: var(--muted); font-size: 14px; letter-spacing: .02em; margin: 0 0 8px; }
+  h1 { font-size: 38px; line-height: 1.2; margin: 0 0 18px; }
+  h2 { font-size: 28px; line-height: 1.25; margin: 0 0 14px; }
+  p { margin: 0 0 12px; }
+  .lead { font-size: 19px; }
+  .note { color: var(--muted); font-size: 15px; }
+  .who {
+    display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; margin-bottom: 12px;
+  }
+  figure { margin: 0; }
+  .shots { display: flex; gap: 14px; justify-content: center; align-items: flex-start; }
+  .shots figure { flex: 1 1 0; min-width: 0; }
+  img {
+    display: block; max-width: 100%; max-height: 66vh; margin: 0 auto;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+  }
+  .shots img { max-height: 60vh; }
+  figcaption { color: var(--muted); font-size: 14px; text-align: center; margin-top: 8px; }
+  .try {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 16px; margin-top: 18px; font-size: 15px;
+  }
+  .try strong { display: block; margin-bottom: 4px; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  ol, ul { margin: 0; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+
+  .stages { display: grid; gap: 12px; margin-top: 26px; }
+  .stage {
+    display: flex; gap: 14px; align-items: baseline; background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+  }
+  .stage b { min-width: 86px; }
+  .tag { font-size: 13px; font-weight: 600; border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+  .tag.ok { color: var(--ok); background: var(--ok-soft); }
+  .tag.wait { color: var(--warn); background: var(--warn-soft); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 22px; }
+  .card.ask { background: var(--warn-soft); border-color: transparent; }
+  .card.ask h2 { color: var(--warn); }
+  .card li { margin-bottom: 12px; }
+
+  /* Navigation */
+  .nav {
+    position: fixed; right: 18px; bottom: 18px; display: flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.12); z-index: 10;
+  }
+  .nav button {
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--accent); color: #fff; font-size: 20px; line-height: 1;
+  }
+  .nav button:disabled { opacity: .35; cursor: default; }
+  .nav span { min-width: 56px; text-align: center; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 860px) {
+    .two { grid-template-columns: 1fr; gap: 20px; }
+    h1 { font-size: 30px; } h2 { font-size: 23px; }
+    .slide { padding: 28px 16px 92px; align-items: flex-start; }
+    .deck { scroll-snap-type: y proximity; }
+    .shots { flex-direction: column; }
+    .stage { flex-direction: column; gap: 4px; }
+    .stage > span { min-width: 0; }
+    .tag { white-space: normal; display: inline-block; margin-top: 4px; }
+    img, .shots img { max-height: none; }
+  }
+  @media print {
+    .deck { height: auto; overflow: visible; } .slide { min-height: auto; break-after: page; } .nav { display: none; }
+  }
+  /* Full-size viewer: click a screenshot to see it large; click again (or «+») for 100% and scroll around it. */
+  .deck img { cursor: zoom-in; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 20; display: none; background: rgba(10,10,10,.92);
+    overflow: auto; -webkit-overflow-scrolling: touch;
+  }
+  .lightbox.open { display: block; }
+  .lightbox .stage-img { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 56px 16px 24px; }
+  .lightbox img {
+    max-width: 100%; max-height: calc(100vh - 80px); border: none; border-radius: 6px; cursor: zoom-in; background: #fff;
+  }
+  .lightbox.full .stage-img { display: block; }
+  .lightbox.full img { max-width: none; max-height: none; cursor: zoom-out; margin: 0 auto; display: block; }
+  .lightbox .bar { position: fixed; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 21; }
+  .lightbox .bar button {
+    width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,.92); color: #1d1d1b; font-size: 22px; line-height: 1;
+  }
+  .lightbox .cap { position: fixed; left: 12px; right: 120px; top: 18px; color: #eee; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- Title slide: what the delivery is, and where each stage of the offer stands -->
+<section class="slide">
+  <div class="inner narrow">
+    <p class="eyebrow">{{Client}} · {{Date, e.g. 4 October 2026}}</p>
+    <h1>{{Title, e.g. "Online orders: delivery progress"}}</h1>
+    <p class="lead">{{One sentence: what the presentation covers.}}</p>
+    <div class="stages">
+      <div class="stage"><b>{{label:stage}} 1</b><span>{{The stage's content, as in the offer.}} <span class="tag ok">{{label:done}}</span></span></div>
+      <div class="stage"><b>{{label:stage}} 2</b><span>{{…}} <span class="tag wait">{{What is pending}}</span></span></div>
+    </div>
+    <p class="note" style="margin-top:22px">{{Where the screenshots come from, and when the steps to try it apply.}} {{label:nav_hint}}</p>
+  </div>
+</section>
+
+<!-- One slide per change: text left, screenshot(s) right -->
+<section class="slide">
+  <div class="inner two">
+    <div>
+      <span class="who">{{Audience | Audience · Audience}}</span>
+      <h2>{{The change's title in plain words}}</h2>
+      <p>{{What changed and why it helps, impersonally: "The app…", "The office…".}}</p>
+      <div class="try"><strong>{{label:how_to_try}}</strong><ol>
+        <li>{{Step 1, with the menu path}}</li>
+        <li>{{Step 2}}</li>
+      </ol></div>
+    </div>
+    <figure>
+      <img src="{{task-NNN-slug.jpg}}" alt="{{What the image shows}}">
+      <figcaption>{{Caption}}</figcaption>
+    </figure>
+    <!-- Two screenshots instead of one:
+    <div class="shots">
+      <figure><img src="…" alt="…"><figcaption>…</figcaption></figure>
+      <figure><img src="…" alt="…"><figcaption>…</figcaption></figure>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- A change with three screenshots: text above, screenshots in a row -->
+<section class="slide">
+  <div class="inner">
+    <span class="who">{{…}}</span>
+    <h2>{{…}}</h2>
+    <p>{{…}}</p>
+    <div class="shots" style="margin-top:18px">
+      <figure><img src="{{…}}" alt="{{…}}"><figcaption>{{…}}</figcaption></figure>
+      <figure><img src="{{…}}" alt="{{…}}"><figcaption>{{…}}</figcaption></figure>
+      <figure><img src="{{…}}" alt="{{…}}"><figcaption>{{…}}</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- What the client must provide. Omit the slide when there is nothing. -->
+<section class="slide">
+  <div class="inner narrow">
+    <div class="card ask">
+      <h2>{{label:needed_from_you}}</h2>
+      <ul>
+        <li><b>{{What is needed.}}</b> {{Why, and what the answer changes.}}</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Next steps: held-back work, the next phase, which step of the offer this completes (amounts only as the offer states them) -->
+<section class="slide">
+  <div class="inner narrow">
+    <div class="card">
+      <h2>{{label:whats_next}}</h2>
+      <p><b>{{Next step}}</b> — {{description}}</p>
+    </div>
+    <p class="note" style="margin-top:18px; text-align:center">{{Client}} · {{Title}} · {{Date}}</p>
+  </div>
+</section>
+
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="{{label:viewer}}">
+  <div class="cap" id="lb-cap"></div>
+  <div class="bar">
+    <button id="lb-zoom" aria-label="{{label:full_size}}">+</button>
+    <button id="lb-close" aria-label="{{label:close}}">×</button>
+  </div>
+  <div class="stage-img" id="lb-stage"><img id="lb-img" alt=""></div>
+</div>
+
+<nav class="nav" aria-label="{{label:navigation}}">
+  <button id="prev" aria-label="{{label:previous}}">‹</button>
+  <span id="count">1 / 1</span>
+  <button id="next" aria-label="{{label:next}}">›</button>
+</nav>
+
+<script>
+(function () {
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var prev = document.getElementById('prev'), next = document.getElementById('next'), count = document.getElementById('count');
+  var current = 0;
+
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    // Smooth scroll, then make sure it arrived: browsers sometimes drop a smooth scroll in a snapping container.
+    var target = slides[current].offsetTop;
+    deck.scrollTo({ top: target, behavior: 'smooth' });
+    setTimeout(function () { if (Math.abs(deck.scrollTop - target) > 4) deck.scrollTo({ top: target, behavior: 'instant' }); }, 700);
+  }
+  function render() {
+    count.textContent = (current + 1) + ' / ' + slides.length;
+    prev.disabled = current === 0;
+    next.disabled = current === slides.length - 1;
+  }
+
+  // The slide that fills most of the screen is the current one (scrolling, swiping or the buttons).
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+        current = slides.indexOf(e.target);
+        render();
+      }
+    });
+  }, { root: deck, threshold: [0.5] });
+  slides.forEach(function (s) { observer.observe(s); });
+
+  prev.addEventListener('click', function () { show(current - 1); });
+  next.addEventListener('click', function () { show(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(slides.length - 1); }
+  });
+  deck.focus();
+  render();
+})();
+</script>
+<script>
+(function () {
+  // Full-size viewer for the screenshots; while open, the slide keys are paused (see the deck script).
+  var box = document.getElementById('lightbox'), img = document.getElementById('lb-img');
+  var cap = document.getElementById('lb-cap'), zoom = document.getElementById('lb-zoom');
+  function open(src, alt, caption) {
+    img.src = src; img.alt = alt || ''; cap.textContent = caption || alt || '';
+    box.classList.remove('full'); zoom.textContent = '+'; box.classList.add('open'); box.scrollTop = 0;
+  }
+  function close() { box.classList.remove('open', 'full'); img.style.width = ''; img.removeAttribute('src'); }
+  function toggle() {
+    // Full size = the original resolution, or twice the fitted size for small screenshots, whichever is larger.
+    var fitted = img.clientWidth;
+    var full = box.classList.toggle('full'); zoom.textContent = full ? '−' : '+';
+    img.style.width = full ? Math.max(img.naturalWidth, fitted * 2) + 'px' : '';
+  }
+  document.querySelectorAll('.deck img').forEach(function (i) {
+    i.addEventListener('click', function () {
+      var fig = i.closest('figure'), fc = fig && fig.querySelector('figcaption');
+      open(i.getAttribute('src'), i.alt, fc ? fc.textContent : '');
+    });
+  });
+  img.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
+  zoom.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-stage').addEventListener('click', function (e) { if (e.target === this) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!box.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    e.stopImmediatePropagation();
+  }, true);
+  window.lightboxOpen = function () { return box.classList.contains('open'); };
+})();
+</script>
+</body>
+</html>

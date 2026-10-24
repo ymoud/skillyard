@@ -10,6 +10,11 @@
       "name": "manage-tasks",
       "source": "./plugins/manage-tasks",
       "description": "Task lifecycle over markdown task files in a docs repository: review, work, discuss, groom and setup."
+    },
+    {
+      "name": "manage-deliverables",
+      "source": "./plugins/manage-deliverables",
+      "description": "Client deliverables over markdown files: the package, its offer, scope changes and payments, shipped phases, and the HTML deck the client reviews. Needs manage-tasks."
     }
   ]
 }

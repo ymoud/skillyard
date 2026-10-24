@@ -1,0 +1,14 @@
+{
+  "name": "manage-deliverables",
+  "version": "1.0.0",
+  "description": "Client deliverables over markdown files in a docs repository: create a package from a client request, prepare the offer, record scope changes and payments, ship a phase, and build the HTML slide deck the client reviews. Works with manage-tasks; per-project settings live in the project's .claude/manage-deliverables/ folder.",
+  "author": {
+    "name": "Yannis Moudilos",
+    "url": "https://github.com/ymoud"
+  },
+  "homepage": "https://github.com/ymoud/skillyard",
+  "repository": "https://github.com/ymoud/skillyard",
+  "license": "MIT",
+  "dependencies": ["manage-tasks"],
+  "keywords": ["deliverables", "offers", "client", "presentation", "project-management"]
+}
