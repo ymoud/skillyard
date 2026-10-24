@@ -123,7 +123,7 @@ Validate, and report each item as OK or as a warning with its evidence. Never bl
 - `config.md` has every required setting, with a known value; unknown keys are listed.
 - The paths exist: `{docs_repo}`, its `tasks/` files and folders, every code repository, `{coding_standards}`, `{actions_file}`, every snapshot folder.
 - `{base_branch}` exists on origin in every code repository.
-- The `ongoing.md`, `backlog.md` and `history.md` headers have the core columns and the `extra_columns`; other columns are listed.
+- The `ongoing.md`, `backlog.md` and `history.md` headers have the `extra_columns`. Columns outside the core and `extra_columns` are warnings. Core columns a header lacks are listed as information: the workflows skip them.
 - The README's status names match `references/task-model.md`; unknown ones are listed.
 - Every `##` heading in `extensions.md` is a known extension point.
 - No task file sits in a folder that contradicts its row, and no ID has a live row in two tracking files.

@@ -47,7 +47,7 @@ This skill's directory is `${CLAUDE_SKILL_DIR}`. Paths such as `workflows/review
 - **The folder follows the state.** `backlog/` holds tasks not started, or paused and parked; `ongoing/` holds active tasks; `history/` holds closed ones. Files change folder only through the move script (`<move_task_files>`), never with `git mv`, `Move-Item` or copy-and-delete, which break every link to them.
 - **Capacity.** At most `{ongoing_capacity}` rows in `ongoing.md`. Check before adding one.
 - **Unique IDs** across the three tracking files and the three task folders. A row whose ID carries a letter prefix (`C14`, `U07`) belongs to another task set: it counts toward capacity, and you never renumber or move it.
-- **Task files** are named `task-{ID}-{slug}.md` and run 10 to 150 lines.
+- **Task files** are named `task-{ID}-{slug}.md` and run 10 to 150 lines, unless the README sets another range.
 - **People** are written in the config's `assignee_form`: a work email or a role. Never guess an assignee; ask.
 - **Ask in plain prose.** Write each question as text, with the options listed, so the user can answer with context. Ask one question at a time when the answers depend on each other.
 - **Decide, then ask** (`<decide_then_ask>`). An unanswered question never stops the work on its own.

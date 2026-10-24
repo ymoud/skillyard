@@ -2,6 +2,11 @@
 
 Newest first. Every release bumps `version` in `../../.claude-plugin/plugin.json` and adds an entry here. `setup --update` shows the entries between a project's copy and the new version.
 
+## 1.0.1 (2026-10-24)
+
+- A tracking file's own header decides its columns. A core column the file lacks, such as *Started On*, is skipped instead of filled, and `setup --check` lists it as information rather than a warning.
+- The README's task length rule wins over the default of 10 to 150 lines.
+
 ## 1.0.0 (2026-10-23)
 
 First release.

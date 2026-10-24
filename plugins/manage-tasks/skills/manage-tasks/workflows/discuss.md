@@ -91,7 +91,7 @@ For each approved task:
    - The ID is unused in every tracking file and folder
    - The name matches `task-{ID}-{slug}.md`, in the folder of the placement chosen
    - Summary, Problem, Solution, Acceptance Criteria and Status Info are all present
-   - The file is 10 to 150 lines
+   - The file's length is within the range in `references/task-model.md` (10 to 150 lines, unless the README sets another)
 </step>
 
 <step name="place_tasks">

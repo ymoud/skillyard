@@ -1,5 +1,5 @@
 <overview>
-The shapes every workflow reads and writes. The project's `{tasks_dir}/README.md` may refine them: its task template, categories and column order win. Its status names must match the ones below; `setup --check` warns when they do not.
+The shapes every workflow reads and writes. The project's `{tasks_dir}/README.md` may refine them: its task template, categories and length rule win. Each tracking file's own header decides that file's columns (`<tracking_files>`). The README's status names must match the ones below; `setup --check` warns when they do not.
 </overview>
 
 <statuses>
@@ -55,7 +55,7 @@ Extension points may add lines, such as a release label or a milestone.
 </status_info>
 
 <tracking_files>
-Core columns. Extra columns (`extra_columns` in the config) sit where the file already has them; keep the file's order, and never drop a column.
+Core columns. The file's own header wins: write the columns it has, in its order, and never drop or add one. A core column the file lacks, such as *Started On*, is skipped wherever a workflow says to fill it. Extra columns (`extra_columns` in the config) sit where the file already has them.
 
 **`ongoing.md`**: `| ID | Task | Category | Status | Assignee | Started On | Blocked By | Updated |`
 - The Task cell links the task file: `[Title](ongoing/task-{ID}-{slug}.md)`.
@@ -75,7 +75,7 @@ Core columns. Extra columns (`extra_columns` in the config) sit where the file a
 - IDs are numbers, zero-padded to three digits (`007`, `132`). A letter suffix marks a split task (`140a`). The next ID is the highest one found across the three tracking files and the three folders, plus one.
 - Rows with a letter prefix (`C14`, `U07`) belong to another task set. Leave them alone.
 - File names: `task-{ID}-{slug}.md`, with a lowercase, hyphenated slug. Companion files (`task-{ID}-findings.md`) sit next to the task file and move with it.
-- Length: 10 to 150 lines.
+- Length: 10 to 150 lines, unless the README sets another range.
 </ids_and_files>
 
 <task_template>
